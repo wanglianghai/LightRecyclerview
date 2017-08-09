@@ -24,6 +24,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements ShowRecyc
 
     @Override
     public void showRecycler(List<?> list) {
+        recyclerView.addItemDecoration(new LinearItemDivider(this));
         recyclerView.setAdapter(new HomeAdapter(this, list));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
