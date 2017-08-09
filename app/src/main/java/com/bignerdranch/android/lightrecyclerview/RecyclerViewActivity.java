@@ -2,6 +2,7 @@ package com.bignerdranch.android.lightrecyclerview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -26,6 +27,16 @@ public class RecyclerViewActivity extends AppCompatActivity implements ShowRecyc
     public void showRecycler(List<?> list) {
         recyclerView.setAdapter(new HomeAdapter(this, list));
         //vertical();
+        horizontal();
+        //grid();
+    }
+
+    private void grid() {
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+    }
+
+    private void horizontal() {
         recyclerView.addItemDecoration(new LinearItemDivider(this, LinearItemDivider.HORIZONTAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }

@@ -68,7 +68,11 @@ public class LinearItemDivider extends RecyclerView.ItemDecoration {
 
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            final int left = child.getRight() + child.getPaddingRight();
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+            //根据父视图的右边界算了margin值和padding的值
+            final int rightChild = child.getRight();
+            final int rightMarginChild = params.rightMargin;
+            final int left = rightChild + rightMarginChild;
             final int right = left + mDrawable.getIntrinsicHeight();
             mDrawable.setBounds(left, top, right, bottom);
             mDrawable.draw(c);
