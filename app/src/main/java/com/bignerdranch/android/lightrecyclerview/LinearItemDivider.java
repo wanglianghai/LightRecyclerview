@@ -19,11 +19,28 @@ public class LinearItemDivider extends RecyclerView.ItemDecoration {
             android.R.attr.listDivider
     };
 
+    public static final int HORIZONTAL = LinearLayoutManager.HORIZONTAL;
+    public static final int VERTICAL = LinearLayoutManager.VERTICAL;
+
+    public int mOrientation;
     private Drawable mDrawable;
-    public LinearItemDivider(Context context) {
+    public LinearItemDivider(Context context, int orientation) {
         TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDrawable = a.getDrawable(0);
         a.recycle();
+        setOrientation(orientation);
+    }
+
+    public void setOrientation(int orientation) {
+        //mOrientation初始值是0就是LinearLayoutManager.HORIZONTAL的值所有不会报异常
+        /*if (mOrientation != HORIZONTAL && mOrientation != VERTICAL) {
+            throw new IllegalArgumentException("invalid orientation");
+        }*/
+        if (orientation != HORIZONTAL && orientation != VERTICAL) {
+            throw new IllegalArgumentException("invalid orientation");
+        }
+
+        mOrientation = orientation;
     }
 
 /**
@@ -36,6 +53,12 @@ public class LinearItemDivider extends RecyclerView.ItemDecoration {
  */
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        if (mOrientation == VERTICAL) {
+            drawVertical(c, parent);
+        }
+    }
+
+    private void drawVertical(Canvas c, RecyclerView parent) {
         //left padding的值
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - parent.getPaddingRight();
