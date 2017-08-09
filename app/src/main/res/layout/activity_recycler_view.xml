@@ -17,7 +17,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_below="@id/my_view"
-        android:paddingLeft="30dp"
+        android:paddingLeft="100dp"
+        android:paddingRight="130dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

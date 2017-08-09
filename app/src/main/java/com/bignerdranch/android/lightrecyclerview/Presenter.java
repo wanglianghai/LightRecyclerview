@@ -15,7 +15,7 @@ public class Presenter {
 
     public void showDate() {
         List<String> strings = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             strings.add(i + "");
         }
         mRecyclerView.showRecycler(strings);

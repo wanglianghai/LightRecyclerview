@@ -33,6 +33,7 @@ public class LinearItemDivider extends RecyclerView.ItemDecoration {
 
     public void setOrientation(int orientation) {
         //mOrientation初始值是0就是LinearLayoutManager.HORIZONTAL的值所有不会报异常
+        //并且就应该判断传入的值是否合法
         /*if (mOrientation != HORIZONTAL && mOrientation != VERTICAL) {
             throw new IllegalArgumentException("invalid orientation");
         }*/
@@ -55,13 +56,29 @@ public class LinearItemDivider extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == VERTICAL) {
             drawVertical(c, parent);
+        } else {
+            horizontal(c, parent);
+        }
+    }
+
+    private void horizontal(Canvas c, RecyclerView parent) {
+        final int top = parent.getPaddingTop(); //padding填充（视图自己的）
+        final int bottom = parent.getHeight() - parent.getPaddingBottom();
+        final int childCount = parent.getChildCount();
+
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            final int left = child.getRight() + child.getPaddingRight();
+            final int right = left + mDrawable.getIntrinsicHeight();
+            mDrawable.setBounds(left, top, right, bottom);
+            mDrawable.draw(c);
         }
     }
 
     private void drawVertical(Canvas c, RecyclerView parent) {
         //left padding的值
         final int left = parent.getPaddingLeft();
-        final int right = parent.getWidth() - parent.getPaddingRight();
+        final int right = parent.getRight() - parent.getPaddingRight();
         final int childCount = parent.getChildCount();
 
         for (int i = 0; i < childCount; i++) {
@@ -72,7 +89,7 @@ public class LinearItemDivider extends RecyclerView.ItemDecoration {
              * LayoutParams的子类用于RecyclerView的子视图。
              */
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-            //底部的margin值
+            //底部的margin值,不覆盖这视图的内容
             final int top = child.getBottom() + params.bottomMargin;
             final int bottom = top + mDrawable.getIntrinsicHeight();
             mDrawable.setBounds(left, top, right, bottom);
