@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.bignerdranch.android.lightrecyclerview.RecyclerViewActivity">
 
-    <com.bignerdranch.android.lightrecyclerview.MyView
+    <com.bignerdranch.android.lightrecyclerview.MyText
         android:id="@+id/my_view"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        app:textSize="30sp"/>
+        app:textString="@string/text"
+        app:textInt="12"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

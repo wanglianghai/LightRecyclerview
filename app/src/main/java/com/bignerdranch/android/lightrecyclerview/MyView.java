@@ -12,10 +12,12 @@ import android.view.View;
 /**
  * Created by Administrator on 2017/8/8/008.
  */
-
+// 自定义一个CustomView(extends View )类
+// 编写values/attrs.xml，在其中编写styleable和item等标签元素
+// 在布局文件中CustomView使用自定义的属性（注意namespace）
+// 在CustomView的构造方法中通过TypedArray获取, 不获取没有值去设置，父类View里面有设置值的
 public class MyView extends View {
     private Paint mPaint = new Paint();
-    private Context mContext;
     private static final String mString = "Welcome to Mr Wei's blog";
 
     public MyView(Context context) {
@@ -25,15 +27,13 @@ public class MyView extends View {
     public MyView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.MyView);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MyView);
 
-        int textColor = a.getColor(R.styleable.MyView_textColor,
-                Color.GREEN);
-        float textSize = a.getDimension(R.styleable.MyView_textSize, 36);
+        int color = a.getColor(R.styleable.MyView_textColor, Color.GREEN);
+        float size = a.getDimension(R.styleable.MyView_textSize, 36);
 
-        mPaint.setTextSize(textSize);
-        mPaint.setColor(textColor);
+        mPaint.setColor(color);
+        mPaint.setTextSize(size);
 
         a.recycle();
     }

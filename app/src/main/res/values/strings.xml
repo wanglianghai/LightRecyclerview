@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LightRecyclerview</string>
     <string name="moon">moon</string>
+    <string name="text">text</string>
 </resources>
