@@ -3,12 +3,14 @@
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+             android:paddingBottom="5dp"
+             android:paddingRight="5dp"
     >
 
     <!--layout_width写死了（50dp）padding的值就无效了-->
     <TextView
         android:id="@+id/tv_item"
-        android:layout_width="55dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/moon"/>

@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 /**
@@ -30,13 +31,14 @@ public class GridItemDivider extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         init(parent);
-        horizontal(c, parent);
-        vertical(c, parent);
+        dividerHorizontal(c, parent);
+        dividerVertical(c, parent);
     }
 
-    private void vertical(Canvas c, RecyclerView parent) {
-        childCount -= getLastColNum();
-        for (int i = 0; i < childCount; i++) {
+    //横向线
+    private void dividerVertical(Canvas c, RecyclerView parent) {
+        int lastColNum = getLastColNum();
+        for (int i = 0; i < childCount - lastColNum; i++) {
 
             View v = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) v.getLayoutParams();
@@ -51,9 +53,25 @@ public class GridItemDivider extends RecyclerView.ItemDecoration {
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
         }
+
+        for (int i = childCount - lastColNum; i < childCount; i ++) {
+            View v = parent.getChildAt(i);
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) v.getLayoutParams();
+            /**
+             * The right margin in pixels of the child. Margin values should be positive.
+             * 这孩子右边的空白像素，空白像素值应该是正数*/
+            final int left = v.getLeft() + params.leftMargin;
+            final int right = v.getRight() + params.rightMargin;
+            final int top = v.getBottom() + params.bottomMargin;
+            final int bottom = top + mDivider.getIntrinsicHeight();
+
+         //   mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
+        }
     }
 
-    private void horizontal(Canvas c, RecyclerView parent) {
+    //竖向线
+    private void dividerHorizontal(Canvas c, RecyclerView parent) {
         for (int i = 0; i < childCount; i++) {
             if (spanCount - 1 == i % spanCount) {
                 continue;
@@ -108,7 +126,15 @@ public class GridItemDivider extends RecyclerView.ItemDecoration {
 
     private void init(RecyclerView parent) {
         childCount = parent.getChildCount();
-        GridLayoutManager g = (GridLayoutManager) parent.getLayoutManager();
-        spanCount = g.getSpanCount();
+        RecyclerView.LayoutManager g = parent.getLayoutManager();
+        if (g instanceof GridLayoutManager) {
+            GridLayoutManager g1 = (GridLayoutManager) g;
+            spanCount = g1.getSpanCount();
+        }
+
+        if (g instanceof StaggeredGridLayoutManager) {
+            StaggeredGridLayoutManager staggeredG = (StaggeredGridLayoutManager) g;
+            spanCount = staggeredG.getSpanCount();
+        }
     }
 }

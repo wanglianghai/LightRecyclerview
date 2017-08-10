@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,10 @@ public class RecyclerViewActivity extends AppCompatActivity implements ShowRecyc
         recyclerView.setAdapter(new HomeAdapter(this, list));
         //vertical();
         //horizontal();
-        grid();
+//        grid();
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+   //     recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+        recyclerView.addItemDecoration(new GridItemDivider(this));
     }
 
     private void grid() {
