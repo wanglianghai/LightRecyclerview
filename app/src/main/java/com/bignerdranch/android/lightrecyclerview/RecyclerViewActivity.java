@@ -27,13 +27,13 @@ public class RecyclerViewActivity extends AppCompatActivity implements ShowRecyc
     public void showRecycler(List<?> list) {
         recyclerView.setAdapter(new HomeAdapter(this, list));
         //vertical();
-        horizontal();
-        //grid();
+        //horizontal();
+        grid();
     }
 
     private void grid() {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+        recyclerView.addItemDecoration(new GridItemDivider(this));
     }
 
     private void horizontal() {
