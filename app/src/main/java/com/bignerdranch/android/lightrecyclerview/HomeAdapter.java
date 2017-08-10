@@ -19,6 +19,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<?> mList;
     private List<Integer> mHeight;
+    private OnItemClickListener mClickListener;
 
     public HomeAdapter(Context context, List<?> list) {
         mContext = context;
@@ -40,6 +41,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         homeHolder.bind(position + "", position);
     }
 
+    public void removeData(int position) {
+        mList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void setItemClickListener(OnItemClickListener listener) {
+        mClickListener = listener;
+    }
+
     @Override
     public int getItemCount() {
         return mList.size();
@@ -51,6 +61,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private HomeHolder(View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.tv_item);
+            mTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mClickListener.onItemClick(getAdapterPosition());
+                }
+            });
             /*if (getAdapterPosition() >= getItemCount() || getAdapterPosition() < 0) {
                 return;
             }

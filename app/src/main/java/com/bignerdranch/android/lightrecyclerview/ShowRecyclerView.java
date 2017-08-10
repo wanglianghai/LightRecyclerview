@@ -7,5 +7,6 @@ import java.util.List;
  */
 
 public interface ShowRecyclerView {
-    void showRecycler(List<?> list);
+    void showRecycler(HomeAdapter adapter);
+    void showRecyclerDialog();
 }
